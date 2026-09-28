@@ -1,0 +1,1 @@
+School enrollment form snippet. Guardian: Ana Marinescu, ana.marinescu.parent@edu-demo.test, tel +40 730 444 556. Child listed as Matei Marinescu. Address: 3 Strada Scoala, Timisoara. Emergency contact same phone. Synthetic record for PII pipeline tests; no real students.

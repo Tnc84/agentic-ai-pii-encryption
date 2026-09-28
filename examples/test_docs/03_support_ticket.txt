@@ -1,0 +1,1 @@
+Support ticket #88421. Reporter Elena Vasilescu claims card ending issues; full demo PAN 4111 1111 1111 1111 (test Visa). Callback +49 170 555 8821. Shipping address: 22 Berliner Strasse, Berlin. Email: elena.vasilescu.support@example.net. Priority high until verified.

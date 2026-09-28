@@ -1,0 +1,1 @@
+Loan application draft. Applicant: Ion Georgescu, email ion.georgescu@finance-demo.ro, phone +40 744 333 221. Declared IBAN DE89370400440532013000. National ID field sample CNP 2900315123456. Residence: 8 Bulevardul Unirii, Bucharest. For underwriting sandbox only.

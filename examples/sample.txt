@@ -1,0 +1,9 @@
+Contact note (synthetic data for demos only)
+
+Name: Jane Example
+Email: jane.example@example.com
+Phone: +40 721 555 019
+IBAN: DE89370400440532013000
+Address: 10 Demo Street, Bucharest
+
+Please send the invoice to jane.example@example.com and call +40 721 555 019 if needed.

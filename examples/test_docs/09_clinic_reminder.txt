@@ -1,0 +1,1 @@
+Clinic reminder SMS draft. Dear patient George Radu, your lab results are ready. Reply to clinic.george.radu@health-demo.ro or call +40 721 888 343. Address on file: 5 Strada Sanatatii, Oradea. Sample CNP 1850522123456 for chart matching drills. Do not send real PHI in production SMS.

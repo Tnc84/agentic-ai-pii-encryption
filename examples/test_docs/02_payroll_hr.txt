@@ -1,0 +1,1 @@
+Payroll export preview (fake data). Employee: Andrei Ionescu. Net pay notice for March. IBAN DE89370400440532013000. Email andrei.ionescu@corp-demo.test. Desk phone +40 21 555 0188. Home address 27 Strada Muncii, Brasov. Internal only — synthetic HR fixture for anonymization tests.

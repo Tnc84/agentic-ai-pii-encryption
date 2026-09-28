@@ -1,0 +1,1 @@
+E-commerce return request. Customer Sofía Álvarez, sofia.alvarez.returns@shop-demo.es, phone +34 612 345 678. Refund to card 4000 0000 0000 0002 (test). Delivery was 9 Calle Mayor, Madrid. Order ORD-77801. Message body kept under 400 chars for CLI batch anonymization tests.

@@ -1,0 +1,36 @@
+---
+alwaysApply: true
+description: Python CLI + LangGraph PII pipeline with Presidio, Ollama, SQLite/Postgres vault, optional API/MCP.
+---
+You are a senior Python engineer building a **modular CLI** (optional FastAPI/MCP adaptors) that orchestrates **LangGraph** agents for **PII detection, verification, anonymization, rewrite, and encrypted deanonymization mapping**.
+
+## Runtime & libraries
+- **Python 3.11+**, **sync** core (API may use a thread pool around services)
+- **Typer** CLI; **Pydantic v2** + **pydantic-settings**
+- **LangGraph** + Sqlite checkpointer (resume after escalate)
+- **LangChain** + **langchain-ollama** (Mistral default)
+- **Presidio** + regex (parallel detect) + optional LLM soft detect
+- **SQLAlchemy 2 sync** + **Alembic** (SQLite default; Postgres via `DATABASE_URL`)
+- **cryptography** AES-GCM + PBKDF2 in `crypto/keys.py` + `crypto/vault.py`
+- Optional: **FastAPI** (`api/`), **MCP** read-only (`mcp_server/`) — never put graph logic in routers/MCP
+- Schema only via **Alembic** (`pii-pipeline db upgrade`); do not `create_all` on normal paths
+
+Prefer **deterministic code** (ingest, crypto, mapping, rescans, DB, Presidio/regex) over LLM nodes when possible.
+
+## Architecture
+- **CLI** (`cli/`) / **API** (`api/`) / **MCP** (`mcp_server/`): adaptors → services only
+- **Services** (`services/`): pipeline, deanonymize, report, ingest
+- **Agents** (`agents/`): state, graph, LLM nodes
+- **PII** (`pii/`): spans, regex, Presidio, mapping, anonymize, rescan
+- **Crypto** / **DB** / **Prompts** / **Obs** as before
+
+## Pipeline
+`ingest` → `detect` (regex ∥ Presidio → merge → optional LLM) → `verify` → (`escalate`+interrupt | `build_map` + `anonymize`) → `rewrite` → `rescan` → (`build_map` retry | `report` → `seal_vault` | `fail`)
+
+- Rescan residual retries go to **build_map**, not raw re-detect
+- Public report / audit: never plaintext PII or clear alias map
+- MCP must not decrypt vault maps
+
+## Code quality
+- Type hints; PEP 8; no nested method definitions; KISS/YAGNI
+- Keep explanations brief unless the user asks for detail

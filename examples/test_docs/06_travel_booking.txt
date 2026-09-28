@@ -1,0 +1,1 @@
+Travel booking confirmation (mock). Traveler Cristina Dumitru. Email cristina.dumitru.travel@book-demo.com, mobile +33 6 12 34 56 78. Refund IBAN DE89370400440532013000. Hotel stay billed to 12 Rue de Rivoli, Paris. Booking BK-44120. Synthetic itinerary for PII CLI regression runs only.

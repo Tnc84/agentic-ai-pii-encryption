@@ -1,0 +1,1 @@
+Insurance claim note. Policyholder Mihai Stanescu reported water damage. Contact mihai.stanescu.claims@insure-demo.org, +40 755 667 788. Card on file for deductible: 5500 0000 0000 0004 (test Mastercard Luhn). Property: 41 Strada Padurii, Iasi. Internal claim ID CLM-2026-0199.
