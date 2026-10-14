@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from logging.config import fileConfig
 
-from alembic import context
 from sqlalchemy import engine_from_config, pool
 
+from alembic import context
 from config.settings import get_settings
 from db.models import Base
 from db.session import _ensure_sqlite_dir

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 import typer
 
@@ -38,7 +37,7 @@ def db_upgrade() -> None:
 @app.command("run")
 def run_cmd(
     file: Path = typer.Argument(..., exists=False, help="Input .txt/.md/.pdf/.docx or -"),
-    out_dir: Optional[Path] = typer.Option(None, "--out-dir", help="Artifacts directory"),
+    out_dir: Path | None = typer.Option(None, "--out-dir", help="Artifacts directory"),
     force: bool = typer.Option(
         False,
         "--force",
@@ -113,9 +112,9 @@ def detect_cmd(
 @app.command("deanonymize")
 def deanonymize_cmd(
     redacted_file: Path = typer.Argument(..., exists=True, readable=True),
-    vault_id: Optional[str] = typer.Option(None, "--vault-id"),
-    run_id: Optional[str] = typer.Option(None, "--run-id"),
-    output: Optional[Path] = typer.Option(None, "--output", "-o"),
+    vault_id: str | None = typer.Option(None, "--vault-id"),
+    run_id: str | None = typer.Option(None, "--run-id"),
+    output: Path | None = typer.Option(None, "--output", "-o"),
 ) -> None:
     """Restore plaintext using encrypted map from SQLite vault."""
     try:

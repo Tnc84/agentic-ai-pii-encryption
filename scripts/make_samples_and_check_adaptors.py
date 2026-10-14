@@ -1,8 +1,9 @@
-from docx import Document
 from pathlib import Path
 
-from pypdf import PdfWriter
-from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject, NumberObject, ArrayObject
+from docx import Document
+
+from api.app import app
+from mcp_server.server import mcp
 
 root = Path("examples/test_docs")
 root.mkdir(parents=True, exist_ok=True)
@@ -52,9 +53,6 @@ startxref
 pdf_path.write_text(content, encoding="latin-1", errors="ignore")
 print("wrote pdf")
 
-# verify imports
-from mcp_server.server import mcp
-from api.app import app
 
 print("mcp", type(mcp))
 print("api", app.title)

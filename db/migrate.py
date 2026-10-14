@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from alembic import command
-from alembic.config import Config
 from sqlalchemy import inspect
 
+from alembic import command
+from alembic.config import Config
 from config.settings import get_settings
 from db.session import get_engine
 

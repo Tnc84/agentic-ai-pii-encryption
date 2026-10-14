@@ -1,5 +1,5 @@
-from mcp_server.server import mcp
 from api.app import app
+from mcp_server.server import mcp
 from services.ingest import ingest_text
 
 print("mcp", mcp.name)
