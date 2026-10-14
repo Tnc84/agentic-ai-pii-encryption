@@ -55,9 +55,9 @@ def get_checkpointer() -> SqliteSaver:
         _checkpointer.setup()
     return _checkpointer
 
-
+# We have a list of nodes and a list of edges.
 def build_graph(checkpointer: SqliteSaver | None = None):
-    graph = StateGraph(PipelineState)
+    graph = StateGraph[PipelineState, None, PipelineState, PipelineState](PipelineState)
     graph.add_node("ingest", ingest_node)
     graph.add_node("detect", detect_node)
     graph.add_node("verify", verify_node)
@@ -69,7 +69,7 @@ def build_graph(checkpointer: SqliteSaver | None = None):
     graph.add_node("report", report_node)
     graph.add_node("seal_vault", seal_vault_node)
     graph.add_node("fail", fail_node)
-
+# edges are the connections between the nodes. In this case, we are adding the edges between the nodes.
     graph.set_entry_point("ingest")
     graph.add_edge("ingest", "detect")
     graph.add_edge("detect", "verify")
