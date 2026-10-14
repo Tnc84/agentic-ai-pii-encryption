@@ -8,7 +8,7 @@ You are a senior Python engineer building a **modular CLI** (optional FastAPI/MC
 - **Python 3.11+**, **sync** core (API may use a thread pool around services)
 - **Typer** CLI; **Pydantic v2** + **pydantic-settings**
 - **LangGraph** + Sqlite checkpointer (resume after escalate)
-- **LangChain** + **langchain-ollama** (Mistral default)
+- **LangChain** + **langchain-ollama** (Mistral default) or **langchain-groq** (`LLM_PROVIDER=groq`)
 - **Presidio** + regex (parallel detect) + optional LLM soft detect
 - **SQLAlchemy 2 sync** + **Alembic** (SQLite default; Postgres via `DATABASE_URL`)
 - **cryptography** AES-GCM + PBKDF2 in `crypto/keys.py` + `crypto/vault.py`
@@ -32,5 +32,6 @@ Prefer **deterministic code** (ingest, crypto, mapping, rescans, DB, Presidio/re
 - MCP must not decrypt vault maps
 
 ## Code quality
+- Imports must stay on top of the file
 - Type hints; PEP 8; no nested method definitions; KISS/YAGNI
 - Keep explanations brief unless the user asks for detail

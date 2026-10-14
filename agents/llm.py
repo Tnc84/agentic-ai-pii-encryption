@@ -19,6 +19,11 @@ logger = get_logger(__name__)
 
 UsageDict = dict[str, int]
 
+# Sensible default when LLM_PROVIDER=groq and LLM_MODEL is still the Ollama default.
+_GROQ_DEFAULT_MODEL = "llama-3.3-70b-versatile"
+_SUPPORTED_PROVIDERS = frozenset({"ollama", "groq"})
+
+
 
 class DetectedEntity(BaseModel):
     entity_type: str
@@ -55,11 +60,7 @@ def ollama_available(base_url: str, timeout: float = 2.0) -> bool:
         return False
 
 
-def build_chat_model(settings: Settings | None = None) -> BaseChatModel:
-    cfg = settings or get_settings()
-    provider = cfg.llm_provider.lower().strip()
-    if provider != "ollama":
-        raise ValueError(f"Unsupported LLM_PROVIDER={provider!r}; v1 supports 'ollama' only")
+def _build_ollama(cfg: Settings) -> BaseChatModel:
     if not ollama_available(cfg.ollama_base_url):
         raise RuntimeError(
             f"Ollama not reachable at {cfg.ollama_base_url}. Start it with `ollama serve`."
@@ -70,6 +71,40 @@ def build_chat_model(settings: Settings | None = None) -> BaseChatModel:
         temperature=cfg.llm_temperature,
         client_kwargs={"timeout": cfg.llm_timeout_seconds},
     )
+
+
+def _build_groq(cfg: Settings) -> BaseChatModel:
+    if not cfg.groq_api_key.strip():
+        raise RuntimeError("GROQ_API_KEY is empty. Set it in .env to use LLM_PROVIDER=groq.")
+    try:
+        from langchain_groq import ChatGroq
+    except ImportError as exc:  # pragma: no cover
+        raise RuntimeError(
+            "langchain-groq is not installed. Run: pip install langchain-groq"
+        ) from exc
+    model = cfg.llm_model.strip()
+    if not model or model.lower() == "mistral":
+        model = _GROQ_DEFAULT_MODEL
+    return ChatGroq(
+        model=model,
+        api_key=cfg.groq_api_key,
+        temperature=cfg.llm_temperature,
+        timeout=cfg.llm_timeout_seconds,
+        max_retries=cfg.llm_max_retries,
+    )
+
+
+def build_chat_model(settings: Settings | None = None) -> BaseChatModel:
+    cfg = settings or get_settings()
+    provider = cfg.llm_provider.lower().strip()
+    if provider not in _SUPPORTED_PROVIDERS:
+        raise ValueError(
+            f"Unsupported LLM_PROVIDER={provider!r}; supported: {sorted(_SUPPORTED_PROVIDERS)}"
+        )
+    if provider == "groq":
+        return _build_groq(cfg)
+    return _build_ollama(cfg)
+
 
 
 def extract_token_usage(message: BaseMessage) -> UsageDict:

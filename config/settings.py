@@ -16,6 +16,7 @@ class Settings(BaseSettings):
         default="http://127.0.0.1:11434",
         alias="OLLAMA_BASE_URL",
     )
+    groq_api_key: str = Field(default="", alias="GROQ_API_KEY")
     llm_model: str = Field(default="mistral", alias="LLM_MODEL")
     llm_temperature: float = Field(default=0.0, alias="LLM_TEMPERATURE")
     llm_timeout_seconds: int = Field(default=120, alias="LLM_TIMEOUT_SECONDS")

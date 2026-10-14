@@ -6,9 +6,9 @@ detect PII → verify → anonymize → rewrite → report → seal encrypted al
 ## Stack
 
 - Typer CLI; optional FastAPI (`pii-pipeline-api`) and read-only MCP (`pii-pipeline-mcp`)
-- LangGraph + LangChain (`langchain-ollama`) + Sqlite checkpointer (resume after escalate)
+- LangGraph + LangChain (`langchain-ollama` / `langchain-groq`) + Sqlite checkpointer
 - Hybrid detect: **regex ∥ Microsoft Presidio** (parallel), optional LLM soft entities
-- Local LLM: **Ollama + Mistral** (verify/rewrite)
+- LLM: **Ollama + Mistral** (local) or **Groq** (`LLM_PROVIDER=groq` + `GROQ_API_KEY`)
 - SQLAlchemy + Alembic (SQLite default; PostgreSQL via `DATABASE_URL`)
 - AES-GCM vault (PBKDF2 passphrase); ciphertext only in DB
 - Ingest: `.txt`, `.md`, `.pdf`, `.docx`
@@ -21,11 +21,11 @@ python -m venv .venv
 pip install -e .
 python -m spacy download en_core_web_sm
 
-copy .env.example .env
-# set VAULT_PASSPHRASE
+# configure .env (VAULT_PASSPHRASE; optional Groq: LLM_PROVIDER=groq, GROQ_API_KEY=...)
 
 pii-pipeline db upgrade
 
+# Ollama only (when LLM_PROVIDER=ollama):
 ollama serve
 ollama pull mistral
 ```
